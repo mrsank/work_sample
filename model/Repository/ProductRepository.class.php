@@ -74,6 +74,12 @@ class ProductRepository
                         left join categories on product.cat_id = categories.id')->find_many();
     }
 
+    /*
+      * @ Modified : Harisankar <mrsank@live.in>
+      * @ Date : 08/11/2015
+      * @ Purpose : Fetching attributes on the basis of product id
+      */
+
     public function getAttribute($id){
         return Model::factory('product')->raw_query("SELECT attr2pizza.pizza_id, attr.name FROM `attr2pizza` 
             join attr on attr2pizza.attr_id = attr.id where attr2pizza.pizza_id = $id")->find_many();
