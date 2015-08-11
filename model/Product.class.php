@@ -14,7 +14,13 @@ class Product extends Model {
      */
     protected function _getPizzaAttr()
     {
-        return $this->attribute;
+        /*
+         * @ Modified : Harisankar <mrsank@live.in>
+         * @ Date : 08/11/2015
+         * @ Purpose : Fetching and displaying the attribute of cat_id 1 (Pizza)
+         */
+
+        return $this->attribute; 
     }
 
     /**
