@@ -30,14 +30,15 @@ class Backend extends Controller  {
       * @ Purpose : Generation of XML file
       */
 
-    public function getAllData(){
+    public function getXmlFile(){
 
-        $aProductInfo = $this->_getProductReposirty()->getAllData();
+        $aProductInfo = $this->_getProductReposirty()->getProductAndCategory();
 
         header( "content-type: application/xml; charset=ISO-8859-15" );
         $xml = new DOMDocument( "1.0", "ISO-8859-15" );
 
         $xml_products = $xml->createElement( "products" );
+
         foreach ($aProductInfo as $value) {
 
             $xml_product = $xml->createElement( "product" );
@@ -53,14 +54,17 @@ class Backend extends Controller  {
             $id = $value->id;
             $attribute = $this->_getProductReposirty()->getAttribute($id);
             $xml_attribute = $xml->createElement( "attributes" );
+
             foreach ($attribute as $attr) {
                 $xml_attri = $xml->createElement( "attribute", $attr->name);
                 $xml_attribute->appendChild( $xml_attri );
                 $attri = $attr->name;
             }
+
             $xml_product->appendChild( $xml_attribute );
             
             $xml_products->appendChild( $xml_product );
+            
             $xml->appendChild( $xml_products );
         }
 
