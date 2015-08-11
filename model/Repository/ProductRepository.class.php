@@ -32,7 +32,7 @@ class ProductRepository
             group by attr2pizza.pizza_id')->find_many();
         }
 
-        /* #Modification ends here... */
+        /* # Modification ends here... */
         
         return Model::factory('product')
                     ->select('product.*')
@@ -62,27 +62,30 @@ class ProductRepository
      /*
       * @ Modified : Harisankar <mrsank@live.in>
       * @ Date : 08/11/2015
-      * @ Purpose : Data for generating the XML
+      * @ Purpose : Fetching the products and category for generating XML
       */
 
-    public function getAllData(){
+    public function getProductAndCategory(){
 
-        return Model::factory('product')->raw_query('SELECT 
-                        DISTINCT(product.id),product.name, product.cost, product.description,
-                        categories.name as catname FROM `product`
-                        left join attr2pizza on product.id = attr2pizza.pizza_id
-                        left join categories on product.cat_id = categories.id')->find_many();
+        return Model::factory('product')
+            ->raw_query('SELECT DISTINCT(product.id),product.name, product.cost, product.description, categories.name as catname 
+            FROM `product`
+            left join attr2pizza on product.id = attr2pizza.pizza_id
+            left join categories on product.cat_id = categories.id')->find_many();
     }
 
     /*
-      * @ Modified : Harisankar <mrsank@live.in>
-      * @ Date : 08/11/2015
-      * @ Purpose : Fetching attributes on the basis of product id
-      */
+     * @ Modified : Harisankar <mrsank@live.in>
+     * @ Date : 08/11/2015
+     * @ Purpose : Fetching attributes for XML on the basis of product id
+     */
 
     public function getAttribute($id){
-        return Model::factory('product')->raw_query("SELECT attr2pizza.pizza_id, attr.name FROM `attr2pizza` 
-            join attr on attr2pizza.attr_id = attr.id where attr2pizza.pizza_id = $id")->find_many();
+
+       return Model::factory('product')
+            ->raw_query("SELECT attr2pizza.pizza_id, attr.name FROM `attr2pizza` 
+            join attr on attr2pizza.attr_id = attr.id 
+            where attr2pizza.pizza_id = $id")->find_many();
     }
 
 }
