@@ -23,13 +23,13 @@ class ProductRepository
          */
 
         if($sCategoryName=="pizza" || $sCategoryName=="Pizza"){
-            return Model::factory('product')->raw_query('select
-            product.cat_id,product.name,product.cost, GROUP_CONCAT(attr.name) as `attribute`
-            from `attr`
-            join `attr2pizza` on attr2pizza.attr_id = attr.id
-            join `product` on attr2pizza.pizza_id = product.id
-            where attr.id = attr2pizza.attr_id and product.id = attr2pizza.pizza_id
-            group by attr2pizza.pizza_id')->find_many();
+            return Model::factory('product')
+                ->raw_query('SELECT product.cat_id,product.name,product.cost, GROUP_CONCAT(attr.name) AS `attribute`
+                from `attr`
+                JOIN `attr2pizza` ON attr2pizza.attr_id = attr.id
+                JOIN `product` ON attr2pizza.pizza_id = product.id
+                WHERE attr.id = attr2pizza.attr_id AND product.id = attr2pizza.pizza_id
+                GROUP BY attr2pizza.pizza_id')->find_many();
         }
 
         /* # Modification ends here... */
@@ -68,10 +68,10 @@ class ProductRepository
     public function getProductAndCategory(){
 
         return Model::factory('product')
-            ->raw_query('SELECT DISTINCT(product.id),product.name, product.cost, product.description, categories.name as catname 
+            ->raw_query('SELECT DISTINCT(product.id),product.name, product.cost, product.description, categories.name AS catname 
             FROM `product`
-            left join attr2pizza on product.id = attr2pizza.pizza_id
-            left join categories on product.cat_id = categories.id')->find_many();
+            LEFT JOIN attr2pizza on product.id = attr2pizza.pizza_id
+            LEFT JOIN categories on product.cat_id = categories.id')->find_many();
     }
 
     /*
@@ -84,8 +84,8 @@ class ProductRepository
 
        return Model::factory('product')
             ->raw_query("SELECT attr2pizza.pizza_id, attr.name FROM `attr2pizza` 
-            join attr on attr2pizza.attr_id = attr.id 
-            where attr2pizza.pizza_id = $id")->find_many();
+            JOIN attr ON attr2pizza.attr_id = attr.id 
+            WHERE attr2pizza.pizza_id = $id")->find_many();
     }
 
 }
