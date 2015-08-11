@@ -70,8 +70,8 @@ class ProductRepository
         return Model::factory('product')
             ->raw_query('SELECT DISTINCT(product.id),product.name, product.cost, product.description, categories.name AS catname 
             FROM `product`
-            LEFT JOIN attr2pizza on product.id = attr2pizza.pizza_id
-            LEFT JOIN categories on product.cat_id = categories.id')->find_many();
+            LEFT JOIN `attr2pizza` on product.id = attr2pizza.pizza_id
+            LEFT JOIN `categories` on product.cat_id = categories.id')->find_many();
     }
 
     /*
@@ -84,7 +84,7 @@ class ProductRepository
 
        return Model::factory('product')
             ->raw_query("SELECT attr2pizza.pizza_id, attr.name FROM `attr2pizza` 
-            JOIN attr ON attr2pizza.attr_id = attr.id 
+            JOIN `attr` ON attr2pizza.attr_id = attr.id 
             WHERE attr2pizza.pizza_id = $id")->find_many();
     }
 
