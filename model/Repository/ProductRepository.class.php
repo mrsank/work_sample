@@ -68,11 +68,15 @@ class ProductRepository
     public function getAllData(){
 
         return Model::factory('product')->raw_query('SELECT 
-                        product.name, product.cost, product.description,
-                        categories.name as catname, attr.name as attribute FROM `product`
+                        DISTINCT(product.id),product.name, product.cost, product.description,
+                        categories.name as catname FROM `product`
                         left join attr2pizza on product.id = attr2pizza.pizza_id
-                        left join attr on attr2pizza.attr_id = attr.id
                         left join categories on product.cat_id = categories.id')->find_many();
+    }
+
+    public function getAttribute($id){
+        return Model::factory('product')->raw_query("SELECT attr2pizza.pizza_id, attr.name FROM `attr2pizza` 
+            join attr on attr2pizza.attr_id = attr.id where attr2pizza.pizza_id = $id")->find_many();
     }
 
 }
