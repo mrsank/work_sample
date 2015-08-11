@@ -14,7 +14,7 @@ class Product extends Model {
      */
     protected function _getPizzaAttr()
     {
-        return '';
+        return $this->attribute;
     }
 
     /**
