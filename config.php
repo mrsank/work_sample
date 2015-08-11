@@ -9,7 +9,7 @@ define('SMARTY_PATH',SITE_ROOT.DS."vendor".DS."smarty".DS."cache".DS)
 $aDbConfig['local'] = array(
      'hostname'   => 'localhost',
      'username'   => 'root',
-     'password'   => 'nexus123',
+     'password'   => '',
      'database'   => 'romantica',
      'dbProvider' => 'mysql',
 );
